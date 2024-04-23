@@ -1,13 +1,29 @@
-
-import React from "react";
-import './../styles/App.css';
-
+import React, { useEffect, useState } from "react";
 const App = () => {
+  const [data, Setdata] = useState([]);
+  const calling = async () => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await res.json();
+    Setdata(data);
+  };
+  useEffect(() => {
+    calling();
+  }, []);
   return (
-    <div>
-        {/* Do not remove the main div */}
-    </div>
-  )
-}
+    <>
+      {data.map((e, index) => {
+        return (
+          <ul>
+            <li>
+              <strong>{e.title}</strong>
+            </li>
+            <br />
+            <p>{e.body}</p>
+          </ul>
+        );
+      })}
+    </>
+  );
+};
 
-export default App
+export default App;
